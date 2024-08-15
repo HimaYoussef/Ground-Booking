@@ -13,7 +13,7 @@ class NoScheduledWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(
-            'assets/no_booking.png',
+            'assets/_booking_success.png',
             width: MediaQuery.of(context).size.width,
           ),
           Text('You didn\'t book any pitch', style: getbodyStyle()),

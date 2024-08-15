@@ -154,7 +154,10 @@ class _Booking_viewState extends State<Booking_view> {
                     );
                   }
                   return snapshot.data?.size == 0
-                      ? const NoScheduledWidget()
+                      ? Image.asset(
+                          'assets/no_booking.png',
+                          width: MediaQuery.of(context).size.width,
+                        )
                       : ListView.builder(
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,

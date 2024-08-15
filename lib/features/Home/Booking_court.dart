@@ -47,16 +47,54 @@ class BookingCourtState extends State<BookingCourt> {
 
   Future<void> getAvailableTimes(selectedDate) async {
     times.clear();
-    AppointmentService()
-        .getAvailableAppointments(
-            selectedDate, widget.courts.StartHour, widget.courts.EndHour)
-        .then(
-      (value) {
-        for (var i in value) {
-          times.add(i.hour);
-        }
-      },
+
+    // Parse the selected date
+    DateTime startOfDay = DateTime.parse('$selectedDate 00:00:00');
+    DateTime endOfDay = DateTime.parse('$selectedDate 23:59:59');
+
+    // Fetch the existing appointments for the selected date and court
+    final bookedTimes = await FirebaseFirestore.instance
+        .collection('appointments')
+        .doc('appointments')
+        .collection('pending')
+        .where('CourtID', isEqualTo: widget.courts.id)
+        .where('StartHour', isGreaterThanOrEqualTo: startOfDay)
+        .where('StartHour', isLessThanOrEqualTo: endOfDay)
+        .get();
+
+    List<int> bookedHours = [];
+    for (var appointment in bookedTimes.docs) {
+      DateTime startHour =
+          (appointment.data()['StartHour'] as Timestamp).toDate();
+      DateTime endHour = (appointment.data()['EndHour'] as Timestamp).toDate();
+
+      // Mark hours as booked
+      for (int hour = startHour.hour; hour < endHour.hour; hour++) {
+        bookedHours.add(hour);
+      }
+    }
+
+    // Fetch available appointments from AppointmentService
+    List<DateTime> availableAppointments =
+        await AppointmentService().getAvailableAppointments(
+      DateTime.parse(selectedDate),
+      widget.courts.StartHour,
+      widget.courts.EndHour,
     );
+
+    List<int> availableHours = [];
+    for (var appointment in availableAppointments) {
+      availableHours.add(appointment.hour);
+    }
+
+    // Combine available hours from AppointmentService with non-booked hours
+    for (int hour in availableHours) {
+      if (!bookedHours.contains(hour)) {
+        times.add(hour);
+      }
+    }
+
+    setState(() {});
   }
 
   Future<void> selectDate(BuildContext context) async {
@@ -82,7 +120,7 @@ class BookingCourtState extends State<BookingCourt> {
       setState(() {
         _dateController.text = DateFormat('dd-MM-yyyy').format(date);
         dateUTC = DateFormat('yyyy-MM-dd').format(date);
-        getAvailableTimes(date);
+        getAvailableTimes(dateUTC);
       });
     }
   }
@@ -310,7 +348,7 @@ class BookingCourtState extends State<BookingCourt> {
       'Court': widget.courts.name,
       'StartHour': DateTime.parse('${dateUTC!} $dateTime:00'),
       'EndHour': DateTime.parse('${dateUTC!} $dateTime1:00'),
-      'isComplete': false,
+      // 'isComplete': false,
       'rating': null,
     };
 

@@ -32,7 +32,8 @@ class AppointmentService {
         availableAppointments.add(candidateTime);
       }
       if (candidateTime.day != DateTime.now().day &&
-          candidateTime.day > DateTime.now().day) {
+          candidateTime.day > DateTime.now().day &&
+          candidateTime.year >= DateTime.now().year) {
         availableAppointments.add(candidateTime);
       }
     }
