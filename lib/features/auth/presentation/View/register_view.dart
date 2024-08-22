@@ -10,11 +10,12 @@ import 'package:pitch_test/core/functions/routing.dart';
 import 'package:pitch_test/core/utils/Colors.dart';
 import 'package:pitch_test/core/utils/Style.dart';
 import 'package:pitch_test/core/widgets/custom_dialogs.dart';
-import 'package:pitch_test/features/Home/nav_bar.dart';
 import 'package:pitch_test/features/auth/presentation/View/Verify_email_view.dart';
 import 'package:pitch_test/features/auth/presentation/View/sign_in_view.dart';
 import 'package:pitch_test/features/auth/presentation/view-model/auth_cubit.dart';
 import 'package:pitch_test/features/auth/presentation/view-model/auth_states.dart';
+import 'package:pitch_test/features/customer/Home/nav_bar.dart';
+import 'package:pitch_test/generated/l10n.dart';
 import 'package:twitter_login/twitter_login.dart';
 
 class RegisterView extends StatefulWidget {
@@ -131,7 +132,7 @@ class _RegisterViewState extends State<RegisterView> {
                     ),
                     const SizedBox(height: 15),
                     Text(
-                      'Create Your Account ',
+                       S.of(context).register_Head,
                       style: getTitleStyle(
                           fontSize: 20, fontWeight: FontWeight.normal),
                     ),
@@ -141,7 +142,7 @@ class _RegisterViewState extends State<RegisterView> {
                       controller: _displayName,
                       style: TextStyle(color: AppColors.black),
                       decoration: InputDecoration(
-                        hintText: ' Username',
+                        hintText: S.of(context).register_Username,
                         hintStyle: getbodyStyle(color: Colors.grey),
                         fillColor: AppColors.white,
                         filled: true,
@@ -159,7 +160,7 @@ class _RegisterViewState extends State<RegisterView> {
                       controller: _displayPhone,
                       style: TextStyle(color: AppColors.black),
                       decoration: InputDecoration(
-                        hintText: ' Phone',
+                        hintText: S.of(context).register_Phone,
                         hintStyle: getbodyStyle(color: Colors.grey),
                         fillColor: AppColors.white,
                         filled: true,
@@ -178,7 +179,7 @@ class _RegisterViewState extends State<RegisterView> {
                       controller: _emailController,
                       textAlign: TextAlign.start,
                       decoration: InputDecoration(
-                        hintText: ' Email',
+                        hintText: S.of(context).register_Email,
                         hintStyle: getbodyStyle(color: Colors.grey),
                         fillColor: AppColors.white,
                         filled: true,
@@ -202,7 +203,7 @@ class _RegisterViewState extends State<RegisterView> {
                       obscureText: isVisable,
                       keyboardType: TextInputType.visiblePassword,
                       decoration: InputDecoration(
-                        hintText: 'Password',
+                        hintText: S.of(context).register_Password,
                         hintStyle: getbodyStyle(color: Colors.grey),
                         fillColor: AppColors.white,
                         filled: true,
@@ -247,7 +248,7 @@ class _RegisterViewState extends State<RegisterView> {
                             ),
                           ),
                           child: Text(
-                            "Sign Up ",
+                            S.of(context).register_Sign_Up_button,
                             style: getTitleStyle(color: AppColors.white),
                           ),
                         ),
@@ -259,7 +260,7 @@ class _RegisterViewState extends State<RegisterView> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Or Sign in with',
+                            S.of(context).register_Sign_in_with_button,
                             style: getbodyStyle(color: AppColors.black),
                           ),
                           Gap(20),
@@ -330,7 +331,7 @@ class _RegisterViewState extends State<RegisterView> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Already Have An Account ?',
+                                  S.of(context).register_Already_Have_An_Account_button,
                                   style: getbodyStyle(color: AppColors.black),
                                 ),
                                 TextButton(
@@ -341,7 +342,7 @@ class _RegisterViewState extends State<RegisterView> {
                                     ));
                                   },
                                   child: Text(
-                                    'Sign in',
+                                   S.of(context).register_Sign_in_button,
                                     style:
                                         getbodyStyle(color: AppColors.color1),
                                   ),

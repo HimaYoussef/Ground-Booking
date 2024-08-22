@@ -10,6 +10,7 @@ import 'package:pitch_test/core/widgets/custom_dialogs.dart';
 import 'package:pitch_test/features/auth/presentation/View/sign_in_view.dart';
 import 'package:pitch_test/features/auth/presentation/view-model/auth_cubit.dart';
 import 'package:pitch_test/features/auth/presentation/view-model/auth_states.dart';
+import 'package:pitch_test/generated/l10n.dart';
 
 class New_Password extends StatefulWidget {
   const New_Password({super.key});
@@ -67,7 +68,7 @@ class _New_PasswordState extends State<New_Password> {
                     ),
                     Gap(50),
                     Text(
-                      'New Password',
+                      S.of(context).New_Password_Head,
                       style: getTitleStyle(
                           fontSize: 20, fontWeight: FontWeight.normal),
                     ),
@@ -78,7 +79,7 @@ class _New_PasswordState extends State<New_Password> {
                           padding: const EdgeInsets.all(8.0),
                           child: Center(
                             child: Text(
-                              'Please enter your phone number, and we will send you a confirmation code.',
+                               S.of(context).New_Password_Desc,
                               style: TextStyle(fontSize: 15),
                             ),
                           ),
@@ -90,7 +91,7 @@ class _New_PasswordState extends State<New_Password> {
                           obscureText: isVisable,
                           keyboardType: TextInputType.visiblePassword,
                           decoration: InputDecoration(
-                            hintText: 'Password',
+                            hintText:  S.of(context).New_Password_Password,
                             hintStyle: getbodyStyle(color: Colors.grey),
                             fillColor: AppColors.white,
                             filled: true,
@@ -120,7 +121,7 @@ class _New_PasswordState extends State<New_Password> {
                           obscureText: isVisable,
                           keyboardType: TextInputType.visiblePassword,
                           decoration: InputDecoration(
-                            hintText: 'Confirm new password',
+                            hintText:  S.of(context).New_Password_Confirm_new_password,
                             hintStyle: getbodyStyle(color: Colors.grey),
                             fillColor: AppColors.white,
                             filled: true,
@@ -184,7 +185,7 @@ class _New_PasswordState extends State<New_Password> {
                                 ),
                               ),
                               child: Text(
-                                "Change password",
+                                 S.of(context).New_Password_Change_password_button,
                                 style: getTitleStyle(color: AppColors.white),
                               ),
                             ),

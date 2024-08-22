@@ -10,6 +10,7 @@ import 'package:pitch_test/core/widgets/custom_dialogs.dart';
 import 'package:pitch_test/features/auth/presentation/View/Verification_code.dart';
 import 'package:pitch_test/features/auth/presentation/view-model/auth_cubit.dart';
 import 'package:pitch_test/features/auth/presentation/view-model/auth_states.dart';
+import 'package:pitch_test/generated/l10n.dart';
 
 class forget_passowrd extends StatefulWidget {
   const forget_passowrd({super.key});
@@ -35,7 +36,10 @@ class _Forget_passwordState extends State<forget_passowrd> {
           pushAndRemoveUntil(context, Verification_view(myauth: myauth));
         } else if (state is LoginErrorState) {
           Navigator.pop(context);
-          showErrorDialog(context, state.error,);
+          showErrorDialog(
+            context,
+            state.error,
+          );
         } else {
           showLoadingDialog(context);
         }
@@ -49,8 +53,10 @@ class _Forget_passwordState extends State<forget_passowrd> {
               child: Icon(Icons.arrow_back_ios_new, color: AppColors.color1)),
           centerTitle: false,
         ),
-        body: Center(
+        body: Padding(
+          padding: const EdgeInsets.only(top: 50),
           child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
             physics: const ClampingScrollPhysics(),
             child: Form(
               key: _formKey,
@@ -63,15 +69,15 @@ class _Forget_passwordState extends State<forget_passowrd> {
                       'assets/Logo.png',
                       width: MediaQuery.of(context).size.width,
                     ),
-                    Gap(30),
+                    // Gap(30),
                     Text(
-                      'Forget password?',
+                      S.of(context).forget_password_Head,
                       style: getTitleStyle(
                           fontSize: 20, fontWeight: FontWeight.normal),
                     ),
-                    Gap(30),
+                    Gap(20),
                     Text(
-                      'Enter your Email for recovery of your account ',
+                      S.of(context).forget_password_Desc,
                       style: getbodyStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w500,
@@ -83,7 +89,7 @@ class _Forget_passwordState extends State<forget_passowrd> {
                       controller: _Forgrt_PasswordController,
                       textAlign: TextAlign.start,
                       decoration: InputDecoration(
-                        hintText: 'Email',
+                        hintText: S.of(context).forget_password_Email,
                         hintStyle: getbodyStyle(color: Colors.grey),
                         fillColor: AppColors.white,
                         filled: true,
@@ -109,9 +115,13 @@ class _Forget_passwordState extends State<forget_passowrd> {
                         height: 50,
                         child: ElevatedButton(
                           onPressed: () async {
+                            // if (_formKey.currentState!.validate()) {
+                            //   await context
+                            //       .read<AuthCubit>()
+                            //       .reset(_Forgrt_PasswordController.text);
+                            // }
                             if (_formKey.currentState!.validate()) {
                               EmailOTP.config(
-                                  // appEmail: "contact@hdevcoder.com",
                                   appName: "Email OTP",
                                   appEmail: _Forgrt_PasswordController.text,
                                   otpLength: 4,
@@ -138,7 +148,7 @@ class _Forget_passwordState extends State<forget_passowrd> {
                             ),
                           ),
                           child: Text(
-                            "Reset password",
+                            S.of(context).forget_password_Reset_password_button,
                             style: getTitleStyle(color: AppColors.white),
                           ),
                         ),

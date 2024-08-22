@@ -6,9 +6,10 @@ import 'package:pitch_test/core/functions/routing.dart';
 import 'package:pitch_test/core/utils/Colors.dart';
 import 'package:pitch_test/core/utils/Style.dart';
 import 'package:pitch_test/core/widgets/custom_dialogs.dart';
-import 'package:pitch_test/features/Home/nav_bar.dart';
 import 'package:pitch_test/features/auth/presentation/view-model/auth_cubit.dart';
 import 'package:pitch_test/features/auth/presentation/view-model/auth_states.dart';
+import 'package:pitch_test/features/customer/Home/nav_bar.dart';
+import 'package:pitch_test/generated/l10n.dart';
 
 class Verify_view extends StatefulWidget {
   const Verify_view({super.key});
@@ -52,13 +53,13 @@ class _Verify_ViewState extends State<Verify_view> {
                     ),
                     Gap(30),
                     Text(
-                      'Verify your account ',
+                      S.of(context).Verify_email_Head,
                       style: getTitleStyle(
                           fontSize: 20, fontWeight: FontWeight.normal),
                     ),
                     Gap(30),
                     Text(
-                      'Click The Button to Receive a Verification Link .',
+                       S.of(context).Verify_email_Desc,
                       textAlign: TextAlign.center,
                       style: getbodyStyle(
                           fontSize: 15,
@@ -106,8 +107,8 @@ class _Verify_ViewState extends State<Verify_view> {
                                     context: context,
                                     dialogType: DialogType.warning,
                                     showCloseIcon: true,
-                                    title: 'Verify Email',
-                                    desc: 'Please verify your email',
+                                    title:  S.of(context).Verify_email_Verify_Dialog_title,
+                                    desc:  S.of(context).Verify_email_Verify_Dialog_desc,
                                     btnOkOnPress: () {
                                       {
                                         context.read<AuthCubit>().Verify(

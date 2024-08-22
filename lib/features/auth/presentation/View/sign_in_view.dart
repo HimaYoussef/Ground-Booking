@@ -10,11 +10,12 @@ import 'package:pitch_test/core/functions/routing.dart';
 import 'package:pitch_test/core/utils/Colors.dart';
 import 'package:pitch_test/core/utils/Style.dart';
 import 'package:pitch_test/core/widgets/custom_dialogs.dart';
-import 'package:pitch_test/features/Home/nav_bar.dart';
 import 'package:pitch_test/features/auth/presentation/View/forget_password.dart';
 import 'package:pitch_test/features/auth/presentation/View/register_view.dart';
 import 'package:pitch_test/features/auth/presentation/view-model/auth_cubit.dart';
 import 'package:pitch_test/features/auth/presentation/view-model/auth_states.dart';
+import 'package:pitch_test/features/customer/Home/nav_bar.dart';
+import 'package:pitch_test/generated/l10n.dart';
 import 'package:twitter_login/twitter_login.dart';
 
 class LoginView extends StatefulWidget {
@@ -125,7 +126,7 @@ class _LoginViewState extends State<LoginView> {
                     ),
                     Gap(50),
                     Text(
-                      'Login to Your Account',
+                      S.of(context).sign_in_Head,
                       style: getTitleStyle(
                           fontSize: 20, fontWeight: FontWeight.normal),
                     ),
@@ -135,7 +136,7 @@ class _LoginViewState extends State<LoginView> {
                       controller: _emailController,
                       textAlign: TextAlign.start,
                       decoration: InputDecoration(
-                        hintText: 'Email',
+                        hintText: S.of(context).sign_in_Email,
                         hintStyle: getbodyStyle(color: Colors.grey),
                         fillColor: AppColors.white,
                         filled: true,
@@ -160,7 +161,7 @@ class _LoginViewState extends State<LoginView> {
                       obscureText: isVisable,
                       keyboardType: TextInputType.visiblePassword,
                       decoration: InputDecoration(
-                        hintText: 'Password',
+                        hintText: S.of(context).sign_in_password,
                         hintStyle: getbodyStyle(color: Colors.grey),
                         fillColor: AppColors.white,
                         filled: true,
@@ -194,7 +195,7 @@ class _LoginViewState extends State<LoginView> {
                                       const forget_passowrd()));
                         },
                         child: Text(
-                          'Forget Password ?',
+                          S.of(context).sign_in_Forget_Password,
                           style: getsmallStyle(color: AppColors.color1),
                         ),
                       ),
@@ -221,7 +222,7 @@ class _LoginViewState extends State<LoginView> {
                             ),
                           ),
                           child: Text(
-                            "Sign in",
+                            S.of(context).sign_in_Sign_in_button,
                             style: getTitleStyle(color: AppColors.white),
                           ),
                         ),
@@ -233,7 +234,7 @@ class _LoginViewState extends State<LoginView> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Or Sign in with',
+                            S.of(context).sign_in_Sign_in_with_button,
                             style: getbodyStyle(color: AppColors.black),
                           ),
                           Gap(20),
@@ -283,8 +284,8 @@ class _LoginViewState extends State<LoginView> {
                               ),
                               Gap(20),
                               GestureDetector(
-                                onTap: () async{
-                                 await signInWithFacebook();
+                                onTap: () async {
+                                  await signInWithFacebook();
                                   Navigator.of(context)
                                       .pushReplacement(MaterialPageRoute(
                                     builder: (context) => HomeView(),
@@ -304,7 +305,9 @@ class _LoginViewState extends State<LoginView> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Don\'t Have An Account ?',
+                                  S
+                                      .of(context)
+                                      .sign_in_Dont_Have_An_Account_button,
                                   style: getbodyStyle(color: AppColors.black),
                                 ),
                                 TextButton(
@@ -315,7 +318,7 @@ class _LoginViewState extends State<LoginView> {
                                       ));
                                     },
                                     child: Text(
-                                      'Sign Up',
+                                      S.of(context).sign_in_Sign_Up_button,
                                       style:
                                           getbodyStyle(color: AppColors.color1),
                                     ))

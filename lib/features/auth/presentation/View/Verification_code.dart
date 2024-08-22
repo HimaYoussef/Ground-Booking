@@ -10,6 +10,7 @@ import 'package:pitch_test/features/auth/presentation/View/widgets/PIN_view.dart
 import 'package:pitch_test/features/auth/presentation/View/New_Password.dart';
 import 'package:pitch_test/features/auth/presentation/view-model/auth_cubit.dart';
 import 'package:pitch_test/features/auth/presentation/view-model/auth_states.dart';
+import 'package:pitch_test/generated/l10n.dart';
 
 class Verification_view extends StatefulWidget {
   const Verification_view({Key? key, required this.myauth}) : super(key: key);
@@ -55,7 +56,7 @@ class _Verification_viewState extends State<Verification_view> {
                       ),
                       Gap(50),
                       Text(
-                        'Enter verification code',
+                         S.of(context).Verification_code_Head,
                         style: getTitleStyle(
                             fontSize: 20, fontWeight: FontWeight.normal),
                       ),
@@ -66,7 +67,7 @@ class _Verification_viewState extends State<Verification_view> {
                             padding: const EdgeInsets.all(8.0),
                             child: Center(
                               child: Text(
-                                'We are automatically detecting SMS messages sent to your email address.',
+                               S.of(context).Verification_code_Desc,
                                 style: TextStyle(fontSize: 15),
                               ),
                             ),
@@ -155,7 +156,7 @@ class _Verification_viewState extends State<Verification_view> {
                                   // ));
                                 },
                                 child: Text(
-                                  'Resend',
+                                  S.of(context).Verification_code_Resend_button,
                                   style: getbodyStyle(color: AppColors.color1),
                                 ))
                           ],
