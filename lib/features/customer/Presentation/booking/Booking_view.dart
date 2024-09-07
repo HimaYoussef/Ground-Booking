@@ -69,9 +69,8 @@ class _Booking_viewState extends State<Booking_view> {
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
-          title:  Text(S.of(context).Booking_view_Dialog_title),
-          content:
-               Text(S.of(context).Booking_view_Dialog_content),
+          title: Text(S.of(context).Booking_view_Dialog_title),
+          content: Text(S.of(context).Booking_view_Dialog_content),
           actions: [
             cancelButton,
             continueButton,
@@ -372,7 +371,9 @@ class _Booking_viewState extends State<Booking_view> {
                                                         document['UserID']);
                                                   },
                                                   child: Text(
-                                                    S.of(context).Booking_view_Cancel_button,
+                                                    S
+                                                        .of(context)
+                                                        .Booking_view_Cancel_button,
                                                     style: getsmallStyle(),
                                                   ))
                                             ],
@@ -402,7 +403,9 @@ class _Booking_viewState extends State<Booking_view> {
                                                   ),
                                                 ),
                                                 child: Text(
-                                                  S.of(context).Booking_view_Find_Players_to_join_button,
+                                                  S
+                                                      .of(context)
+                                                      .Booking_view_Find_Players_to_join_button,
                                                   style: getbodyStyle(
                                                       color: AppColors.white),
                                                 ),

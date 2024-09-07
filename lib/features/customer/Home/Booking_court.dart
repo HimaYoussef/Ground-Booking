@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:pitch_test/core/functions/routing.dart';
 import 'package:pitch_test/core/utils/Colors.dart';
 import 'package:pitch_test/core/utils/Style.dart';
-
 import 'package:pitch_test/features/customer/Home/Widgets/available_appointments.dart';
 import 'package:pitch_test/features/customer/Home/data/Court_model.dart';
 import 'package:pitch_test/features/customer/Home/nav_bar.dart';
@@ -27,8 +26,10 @@ class BookingCourt extends StatefulWidget {
 
 class BookingCourtState extends State<BookingCourt> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   final TextEditingController _dateController = TextEditingController(
-      text: DateFormat('dd-MM-yyyy').format(DateTime.now()));
+    text: DateFormat('dd-MM-yyyy', 'en').format(DateTime.now()),
+  );
 
   TimeOfDay currentTime = TimeOfDay.now();
   String? dateUTC;
@@ -47,14 +48,16 @@ class BookingCourtState extends State<BookingCourt> {
 
   List<int> times = [];
 
-  Future<void> getAvailableTimes(selectedDate) async {
+  Future<void> getAvailableTimes(String selectedDate) async {
     times.clear();
 
-    // Parse the selected date
+    // Parse the selected date using English numerals
+    // DateTime startOfDay = DateFormat('yyyy-MM-dd', 'en').parse(selectedDate);
+    // DateTime endOfDay =
+    //     DateTime(startOfDay.year, startOfDay.month, startOfDay.day, 23, 59, 59);
     DateTime startOfDay = DateTime.parse('$selectedDate 00:00:00');
     DateTime endOfDay = DateTime.parse('$selectedDate 23:59:59');
 
-    // Fetch the existing appointments for the selected date and court
     final bookedTimes = await FirebaseFirestore.instance
         .collection('appointments')
         .doc('appointments')
@@ -70,16 +73,14 @@ class BookingCourtState extends State<BookingCourt> {
           (appointment.data()['StartHour'] as Timestamp).toDate();
       DateTime endHour = (appointment.data()['EndHour'] as Timestamp).toDate();
 
-      // Mark hours as booked
       for (int hour = startHour.hour; hour < endHour.hour; hour++) {
         bookedHours.add(hour);
       }
     }
 
-    // Fetch available appointments from AppointmentService
     List<DateTime> availableAppointments =
         await AppointmentService().getAvailableAppointments(
-      DateTime.parse(selectedDate),
+      startOfDay,
       widget.courts.StartHour,
       widget.courts.EndHour,
     );
@@ -89,7 +90,6 @@ class BookingCourtState extends State<BookingCourt> {
       availableHours.add(appointment.hour);
     }
 
-    // Combine available hours from AppointmentService with non-booked hours
     for (int hour in availableHours) {
       if (!bookedHours.contains(hour)) {
         times.add(hour);
@@ -120,9 +120,9 @@ class BookingCourtState extends State<BookingCourt> {
 
     if (date != null) {
       setState(() {
-        _dateController.text = DateFormat('dd-MM-yyyy').format(date);
-        dateUTC = DateFormat('yyyy-MM-dd').format(date);
-        getAvailableTimes(dateUTC);
+        _dateController.text = DateFormat('dd-MM-yyyy', 'en').format(date);
+        dateUTC = DateFormat('yyyy-MM-dd', 'en').format(date);
+        getAvailableTimes(dateUTC!);
       });
     }
   }
@@ -232,12 +232,12 @@ class BookingCourtState extends State<BookingCourt> {
                     Wrap(
                       spacing: 8.0,
                       children: [
-                        for (int i = 0; i < times.length - 1; i++)
+                        for (int i = 0; i < times.length; i++)
                           ChoiceChip(
                             backgroundColor: AppColors.scaffoldBG,
                             selectedColor: AppColors.color1,
                             label: Text(
-                              '${times[i].toString()}:00',
+                              '${times[i].toString().padLeft(2, '0')}:00',
                               style: TextStyle(
                                 color: i == isSelected
                                     ? AppColors.white
@@ -249,7 +249,7 @@ class BookingCourtState extends State<BookingCourt> {
                               setState(() {
                                 isSelected = i;
                                 dateTime =
-                                    '${(times[i] < 10) ? '0' : ''}${times[i].toString()}:00';
+                                    '${times[i].toString().padLeft(2, '0')}:00';
                               });
                             },
                           ),
@@ -267,7 +267,7 @@ class BookingCourtState extends State<BookingCourt> {
                             backgroundColor: AppColors.scaffoldBG,
                             selectedColor: AppColors.color2,
                             label: Text(
-                              '${times[j].toString()}:00',
+                              '${times[j].toString().padLeft(2, '0')}:00',
                               style: TextStyle(
                                 color: j == _isSelected
                                     ? AppColors.white
@@ -279,7 +279,7 @@ class BookingCourtState extends State<BookingCourt> {
                               setState(() {
                                 _isSelected = j;
                                 dateTime1 =
-                                    '${(times[j] < 10) ? '0' : ''}${times[j].toString()}:00';
+                                    '${times[j].toString().padLeft(2, '0')}:00';
                               });
                             },
                           ),
@@ -357,7 +357,6 @@ class BookingCourtState extends State<BookingCourt> {
       'Court': widget.courts.name,
       'StartHour': DateTime.parse('${dateUTC!} $dateTime:00'),
       'EndHour': DateTime.parse('${dateUTC!} $dateTime1:00'),
-      // 'isComplete': false,
       'rating': null,
     };
 

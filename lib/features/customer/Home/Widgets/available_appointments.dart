@@ -22,18 +22,15 @@ class AppointmentService {
     );
 
     List<DateTime> availableAppointments = [];
+    DateTime now = DateTime.now();
+
     for (int i = startHour; i < endHour; i++) {
       DateTime candidateTime =
           DateTime(selectedDate.year, selectedDate.month, selectedDate.day, i);
 
-      if (candidateTime.hour > DateTime.now().hour &&
-          candidateTime.day == DateTime.now().day &&
-          candidateTime.month == DateTime.now().month) {
+      if (selectedDate.isAtSameMomentAs(now) && candidateTime.hour > now.hour) {
         availableAppointments.add(candidateTime);
-      }
-      if (candidateTime.day != DateTime.now().day &&
-          candidateTime.day > DateTime.now().day &&
-          candidateTime.year >= DateTime.now().year) {
+      } else if (selectedDate.isAfter(now)) {
         availableAppointments.add(candidateTime);
       }
     }

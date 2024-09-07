@@ -54,6 +54,7 @@ dependencies:
   oauth2: ^2.0.2
   flutter_email_sender: ^6.0.3
   flutter_localization: ^0.2.1
+  flutter_local_notifications: ^17.2.2
 
 
 dev_dependencies:
@@ -66,6 +67,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/
+    - assets/pitch-test-12b39-firebase-adminsdk-nlp0t-f18f67a0d2.json
 flutter_intl:
   enabled: true
